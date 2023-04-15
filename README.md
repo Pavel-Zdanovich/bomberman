@@ -93,7 +93,7 @@ Clients are waiting for a request from the server and respond with action.
 ### Response body
 
 ```
-R
+>
 ```
 
 ### Examples
