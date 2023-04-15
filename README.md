@@ -166,7 +166,7 @@ Clients are waiting for a request from the server and respond with action.
 #########     #########
 #       #     #  *    #
 # # # # #     # #*#*# #
-#  1 9  #  >  #****** #
+#  1 9  #     #****** #
 # # # # #     # #*#*# #
 #       #     #  *    #
 #########     #########
