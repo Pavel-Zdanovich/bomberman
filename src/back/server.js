@@ -32,4 +32,4 @@ const update = (abortController) => {
     return Promise.reject();
 }
 
-export {init, update, playground};
+export {init, update, playground, clients};

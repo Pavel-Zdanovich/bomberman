@@ -28,7 +28,7 @@ class Playground {
         for (let y = 0; y < this.#map.length; y++) {
             for (let x = 0; x < this.#map[y].length; x++) {
                 const cell = this.#map[y][x];
-                if (cell.isSpace()) {
+                if (cell.hasSpace()) {
                     possibleCells.push(cell);
                 }
             }

@@ -1,0 +1,12 @@
+:host {
+  flex-grow: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+svg {
+  /*stroke-width: 0.5%;*/
+  stroke: var(--primary-color);
+  fill: var(--accent-color);
+  height: 100%;
+}

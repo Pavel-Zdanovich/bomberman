@@ -1,0 +1,9 @@
+<form>
+  <button class="primary" type="button" (click)="startAndStop()">
+    <mat-icon *ngIf="!gameIsRunning">play_arrow</mat-icon>
+    <mat-icon *ngIf="gameIsRunning">stop</mat-icon>
+<!--    <i class="material-icons" *ngIf="!gameIsRunning">play_arrow</i>-->
+<!--    <i class="material-icons" *ngIf="gameIsRunning">stop</i>-->
+  </button>
+  <input type="number" placeholder="timeout" #timeout (keyup.enter)="setTimeout(timeout.value)">
+</form>

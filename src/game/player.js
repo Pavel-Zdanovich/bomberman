@@ -11,6 +11,10 @@ class Player {
 
     isAlive;
 
+    #updated;
+
+    #action;
+
     #causeOfDeath
 
     #playground;
@@ -23,7 +27,16 @@ class Player {
         }
         this.name = name;
         this.isAlive = true;
+        this.#updated = 0;
         this.#bombs = [];
+    }
+
+    get updated() {
+      return this.#updated;
+    }
+
+    get action() {
+        return this.#action;
     }
 
     get causeOfDeath() {
@@ -50,20 +63,43 @@ class Player {
     }
 
     takes(action) {
+        this.#updated++;
+        this.#action = undefined;
         if (action === SPACE) {
+            this.#action = action;
             return this;
         }
         if (action === LEFT) {
-            return this.#playground.move(this, this.x - 1, this.y);
+          if (this.#playground.move(this, this.x - 1, this.y)) {
+            this.#action = action;
+            return this;
+          } else {
+            return;
+          }
         }
         if (action === RIGHT) {
-            return this.#playground.move(this, this.x + 1, this.y);
+            if (this.#playground.move(this, this.x + 1, this.y)) {
+              this.#action = action;
+              return this;
+            } else {
+              return;
+            }
         }
         if (action === UP) {
-            return this.#playground.move(this, this.x, this.y - 1);
+            if (this.#playground.move(this, this.x, this.y - 1)) {
+              this.#action = action;
+              return this;
+            } else {
+              return;
+            }
         }
         if (action === DOWN) {
-            return this.#playground.move(this, this.x, this.y + 1);
+            if (this.#playground.move(this, this.x, this.y + 1)) {
+              this.#action = action;
+              return;
+            } else {
+              return;
+            }
         }
         if (action[0] === BOMB) {
             let time = 3;
@@ -74,9 +110,12 @@ class Player {
             }
             const bomb = this.#playground.plant(new Bomb(time, power), this.x, this.y);
             if (bomb !== undefined) {
+                this.#action = action;
                 this.bind(bomb);
+                return this;
+            } else {
+              return;
             }
-            return this;
         }
         throw Error(`Player '${this.name}' attempted to perform an illegal action '${action}'`);
     }

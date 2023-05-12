@@ -208,8 +208,32 @@ class Cell {
         }
     }
 
-    isSpace() {
+    hasSpace() {
         return this.z[0].name === SPACE;
+    }
+
+    hasWall() {
+      return this.z[0].name === WALL;
+    }
+
+    hasFire() {
+      return this.z[0].name === FIRE;
+    }
+
+    hasBomb() {
+      return Bomb.isBomb(this.z[0]);
+    }
+
+    getPlayers() {
+      let z = this.z;
+      if (Bomb.isBomb(this.z[0])) {
+        z = this.z.slice(1);
+      }
+      if (this.#playground.isPlayers(z)) {
+        return z;
+      } else {
+        return [];
+      }
     }
 }
 
