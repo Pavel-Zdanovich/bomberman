@@ -109,6 +109,7 @@ class Playground {
     }
 
     calculate() {
+        console.log(`calculate`);
         const bombs = [];
         while (this.#bombs.length) {
             const bomb = this.#bombs.shift();

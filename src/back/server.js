@@ -6,18 +6,20 @@ import {configs, map} from "./config.js";
 let playground;
 const clients = [];
 const init = () => {
+    console.log(`init`);
     playground = new Playground(map);
-    for (const {name, x, y, url, poll} of configs) {
+    for (const {name, x, y, url, poll, color} of configs) {
         const player = new Player(name);
         playground.spawn(player, x, y);
         playground.players.push(player);
         player.playground = playground;
-        const client = new Client(playground, player, url, poll);
+        const client = new Client(playground, player, url, poll, color);
         clients.push(client);
     }
 }
 
 const update = (abortController) => {
+    console.log(`update`);
     const promises = [];
     try {
         for (const client of clients) {

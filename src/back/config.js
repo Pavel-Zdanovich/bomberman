@@ -37,21 +37,24 @@ const configs = [
         x: 3,
         y: 3,
         url: 'http://localhost:8080',
-        poll
+        poll,
+        color: 'rgb(171,76,64)'
     },
     {
         name: 'B',
         x: 7,
         y: 1,
         url: 'http://localhost:8081',
-        poll
+        poll,
+        color: 'rgb(107,134,68)'
     },
     {
         name: 'C',
         x: 7,
         y: 7,
         url: 'http://localhost:8082',
-        poll
+        poll,
+        color: 'rgb(82,89,171)'
     }
 ];
 

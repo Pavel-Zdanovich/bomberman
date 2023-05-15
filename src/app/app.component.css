@@ -18,3 +18,7 @@ main {
   display: flex;
   padding: var(--content-padding);
 }
+
+playground {
+  aspect-ratio: 1/1;
+}

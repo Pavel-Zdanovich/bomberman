@@ -6,15 +6,13 @@ import {AppComponent} from "./app.component";
 import {ClientComponent} from "./client/client.component";
 import {ControlComponent} from "./control/control.component";
 import {PlaygroundComponent} from "./playground/playground.component";
-import {PlayerComponent} from "./player/player.component";
-import {ɵEmptyOutletComponent} from "@angular/router";
+import {PlayerComponent} from "./playground/player/player.component";
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        MatIconModule,
-        ɵEmptyOutletComponent
+        MatIconModule
     ],
   declarations: [
     AppComponent,

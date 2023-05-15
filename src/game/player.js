@@ -1,4 +1,4 @@
-import {BOMB, DOWN, LEFT, RIGHT, SPACE, UP} from "./alphabet.js";
+import {BOMB, DOWN, FIRE, LEFT, RIGHT, SPACE, UP} from "./alphabet.js";
 import {Bomb} from "./bomb.js";
 
 class Player {
@@ -56,6 +56,8 @@ class Player {
     }
 
     die(causeOfDeath) {
+        this.#updated++;
+        this.#action = FIRE;
         if (causeOfDeath) {
             this.#causeOfDeath = causeOfDeath;
         }
@@ -64,42 +66,21 @@ class Player {
 
     takes(action) {
         this.#updated++;
-        this.#action = undefined;
+        this.#action = action;
         if (action === SPACE) {
-            this.#action = action;
             return this;
         }
         if (action === LEFT) {
-          if (this.#playground.move(this, this.x - 1, this.y)) {
-            this.#action = action;
-            return this;
-          } else {
-            return;
-          }
+            return this.#playground.move(this, this.x - 1, this.y);
         }
         if (action === RIGHT) {
-            if (this.#playground.move(this, this.x + 1, this.y)) {
-              this.#action = action;
-              return this;
-            } else {
-              return;
-            }
+            return this.#playground.move(this, this.x + 1, this.y);
         }
         if (action === UP) {
-            if (this.#playground.move(this, this.x, this.y - 1)) {
-              this.#action = action;
-              return this;
-            } else {
-              return;
-            }
+            return this.#playground.move(this, this.x, this.y - 1);
         }
         if (action === DOWN) {
-            if (this.#playground.move(this, this.x, this.y + 1)) {
-              this.#action = action;
-              return;
-            } else {
-              return;
-            }
+            return this.#playground.move(this, this.x, this.y + 1);
         }
         if (action[0] === BOMB) {
             let time = 3;
@@ -110,7 +91,6 @@ class Player {
             }
             const bomb = this.#playground.plant(new Bomb(time, power), this.x, this.y);
             if (bomb !== undefined) {
-                this.#action = action;
                 this.bind(bomb);
                 return this;
             } else {

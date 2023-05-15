@@ -1,12 +1,25 @@
 :host {
-  flex-grow: inherit;
   display: flex;
   flex-direction: column;
 }
 
 svg {
-  /*stroke-width: 0.5%;*/
-  stroke: var(--primary-color);
-  fill: var(--accent-color);
+  stroke: black;
+  fill: beige;
+}
+
+.map {
   height: 100%;
+}
+
+.wall {
+  fill: sandybrown;
+}
+
+.bomb {
+  fill: grey;
+}
+
+.fire {
+  fill: orangered;
 }

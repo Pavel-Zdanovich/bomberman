@@ -7,7 +7,7 @@ import {Component, Input} from "@angular/core";
 })
 export class PlaygroundComponent {
   @Input() map: any;
-  @Input() players: any;
+  @Input() clients: any;
   hasWall(cell: any) {
     return cell.hasWall();
   }

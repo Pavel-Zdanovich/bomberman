@@ -8,26 +8,40 @@ import {update} from "../../back/server.js";
   styleUrls: ['./control.component.css']
 })
 export class ControlComponent implements OnDestroy {
-  gameIsRunning: boolean = false;
-  id: number = -1;
-  abortController = new AbortController();
-  timeout: number = 1000;
+  gameIsRunning = false;
+  private id = -1;
+  private abortController: any;
+  min = 0.2;
+  max = 2.0;
+  step = 0.6;
+  private timeout = 1000;
   startAndStop() {
     if (this.gameIsRunning) {
-      console.log("stop");
-      clearInterval(this.id);
-      this.abortController.abort();
+      this.stop();
     } else {
-      console.log("start");
-      this.id = setInterval(() => update(this.abortController), this.timeout);
+      this.start();
     }
-    this.gameIsRunning = !this.gameIsRunning;
   }
+
+  private stop() {
+    console.log("stop");
+    this.abortController.abort();
+    clearInterval(this.id);
+    this.gameIsRunning = false;
+  }
+
+  private start() {
+    console.log("start");
+    this.abortController = new AbortController();
+    this.id = setInterval(() => update(this.abortController), this.timeout);
+    this.gameIsRunning = true;
+  }
+
   setTimeout(timeout: string) {
-    this.timeout = parseInt(timeout);
+    this.stop();
+    this.timeout = 1000 / parseFloat(timeout);
   };
   ngOnDestroy() {
-    clearInterval(this.id);
-    this.abortController.abort();
+    this.stop();
   }
 }
