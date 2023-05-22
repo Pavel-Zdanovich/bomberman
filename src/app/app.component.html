@@ -1,8 +1,2 @@
-<header>
-  <control></control>
-</header>
-<main>
-  <client [clients]="clients"></client>
-  <playground [map]="playground.map" [clients]="clients"></playground>
-</main>
-<footer>Footer</footer>
+<control [clients]="clients" [timeout]="timeout" (timeoutEvent)="setTimeout($event)"/>
+<playground [map]="playground.map" [clients]="clients" [timeout]="timeout"/>

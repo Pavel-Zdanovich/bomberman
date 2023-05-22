@@ -1,10 +1,23 @@
-<form>
-  <button class="primary" type="button" (click)="startAndStop()">
-    <mat-icon *ngIf="!gameIsRunning">play_arrow</mat-icon>
-    <mat-icon *ngIf="gameIsRunning">stop</mat-icon>
-<!--    <i class="material-icons" *ngIf="!gameIsRunning">play_arrow</i>-->
-<!--    <i class="material-icons" *ngIf="gameIsRunning">stop</i>-->
-  </button>
-  <label for="timeout"></label>
-  <input id="timeout" type="range" min="{{min}}" max="{{max}}" step="{{step}}" #inputElement (input)="setTimeout(inputElement.value)"/>
-</form>
+<div>
+    <button mat-icon-button color="primary" (click)="startAndStop()">
+        <mat-icon *ngIf="!gameIsRunning">play_arrow</mat-icon>
+        <mat-icon *ngIf="gameIsRunning">stop</mat-icon>
+    </button>
+    <mat-slider
+        #speedInput
+        [min]="min"
+        [max]="max"
+        [step]="step"
+        [value]="speed"
+        (input)="setSpeed(speedInput.value)"
+        showTickMarks discrete thumbLabel
+    />
+</div>
+<ng-container *ngFor="let client of clients">
+    <client
+            [client]="client"
+            (nameEvent)="setName($event)"
+            (urlEvent)="setUrl($event)"
+            (colorEvent)="setColor($event)"
+    />
+</ng-container>

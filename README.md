@@ -4,8 +4,8 @@ Coding competition
 
 ## Gameplay
 
-Game is made in the PvP arcade maze genre. 
-The players spawn in a labyrinth of walls, they move around the map and leave bombs 
+Game is made in the PvP arcade maze genre.
+The players spawn in a labyrinth of walls, they move around the map and leave bombs
 that explode after the countdown and kill other players.
 The player who left the bomb that kill another player gets points.
 The players respawn in an empty space after death.
@@ -14,17 +14,17 @@ The goal is to earn the most points.
 ## Setting
 
 - **Map** - coordinate system consists of cells, X - horizontal axis, Y - vertical axis, Origin - top left corner.
-- **Cell** - square with coordinates [x,y]. 
+- **Cell** - square with coordinates [x,y].
   Contains one of the following game objects at same time:
-  - **Space** - empty place.
-  - **Wall** - unbreakable barrier.
-  - **Fire** - kills players and explodes other bombs in a **chain**.
-  - **Bomb** - explodes with fire that spreads perpendicular equidistantly for a certain **distance**.
-  - **Player** - moves around the map and places bombs.
-  
-  OR contains multiple game objects at same time:
-  - **Players**
-  - **Bomb AND Players**
+    - **Space** - empty place.
+    - **Wall** - unbreakable barrier.
+    - **Fire** - kills players and explodes other bombs in a **chain**.
+    - **Bomb** - explodes with fire that spreads perpendicular equidistantly for a certain **distance**.
+    - **Player** - moves around the map and places bombs.
+
+      OR contains multiple game objects at same time:
+    - **Players**
+    - **Bomb AND Players**
 
 ### Game objects:
 
@@ -51,13 +51,13 @@ The goal is to earn the most points.
 
 ### State machine
 
-|                    | Space      | Wall    | Fire          | Bomb     | Player(s)  | Bomb and Player(s) |
-|--------------------|------------|---------|---------------|----------|------------|--------------------|
-| Space              | nothing    | nothing | go out        | error    | error      | error              |
-| Wall               | error      | error   | error         | error    | error      | error              |
-| Fire               | fire       | nothing | previous fire | explodes | kill       | explodes and kill  |
-| Bomb               | error      | error   | error         | error    | plant      | nothing            |
-| Player(s)          | add player | nothing | nothing       | nothing  | add player | error              |
+|           | Space      | Wall    | Fire          | Bomb     | Player(s)  | Bomb and Player(s) |
+|-----------|------------|---------|---------------|----------|------------|--------------------|
+| Space     | nothing    | nothing | go out        | error    | error      | error              |
+| Wall      | error      | error   | error         | error    | error      | error              |
+| Fire      | fire       | nothing | previous fire | explodes | kill       | explodes and kill  |
+| Bomb      | error      | error   | error         | error    | plant      | nothing            |
+| Player(s) | add player | nothing | nothing       | nothing  | add player | error              |
 
 ## Mechanics
 
@@ -74,15 +74,105 @@ Clients are waiting for a request from the server and respond with action.
   "x": 1,
   "y": 1,
   "map": [
-    ["#", "#", "#", "#", "#", "#", "#", "#", "#"],
-    ["#", "A", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
-    ["#", "@", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
-    ["#", " ", " ", " ", " ", " ", " ", " ", "#"],
-    ["#", "#", "#", "#", "#", "#", "#", "#", "#"]
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "A",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      " ",
+      "#",
+      " ",
+      "#",
+      " ",
+      "#",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      "@",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      " ",
+      "#",
+      " ",
+      "#",
+      " ",
+      "#",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      " ",
+      "#",
+      " ",
+      "#",
+      " ",
+      "#",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ]
   ],
   "players": [
     {
@@ -112,6 +202,7 @@ Clients are waiting for a request from the server and respond with action.
 ### Examples
 
 **Left**
+
 ```
 ####    ####
 # A#    #A #
@@ -120,6 +211,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Right**
+
 ```
 ####    ####
 #A #    # A#
@@ -128,6 +220,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Up**
+
 ```
 ####    ####
 #  #    #A #
@@ -136,6 +229,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Down**
+
 ```
 ####    ####
 #A #    #  #
@@ -144,6 +238,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Bomb with power 2 explodes**
+
 ```
 #######       #######
 #     #       #     #
@@ -155,6 +250,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Bomb with power 3 explodes**
+
 ```
 #######       #######
 #     #       #  *  #
@@ -166,6 +262,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Bomb with power 3 explodes bomb with power 2 in a chain**
+
 ```
 #########     #########
 #       #     #  *    #
@@ -177,6 +274,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Fire goes out**
+
 ```
 #####     #####
 # * #     #   #
@@ -186,6 +284,7 @@ Clients are waiting for a request from the server and respond with action.
 ```
 
 **Bomb with power 4 explodes, fire is limited to walls**
+
 ```
 #########         #########
 #  #    #         #  #    #

@@ -8,12 +8,10 @@ const clients = [];
 const init = () => {
     console.log(`init`);
     playground = new Playground(map);
-    for (const {name, x, y, url, poll, color} of configs) {
-        const player = new Player(name);
-        playground.spawn(player, x, y);
-        playground.players.push(player);
-        player.playground = playground;
-        const client = new Client(playground, player, url, poll, color);
+    for (const {name, x, y, url, color, request} of configs) {
+        const player = new Player(name, playground);
+        player.spawn(x, y);
+        const client = new Client(player, url, color, request, playground);
         clients.push(client);
     }
 }
@@ -23,7 +21,7 @@ const update = (abortController) => {
     const promises = [];
     try {
         for (const client of clients) {
-            const promise = client.poll(abortController);
+            const promise = client.request(abortController, playground);
             promises.push(promise);
         }
         return Promise.allSettled(promises).then(() => playground.calculate());

@@ -1,25 +1,26 @@
 :host {
-  display: flex;
-  flex-direction: column;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
 }
 
 svg {
-  stroke: black;
-  fill: beige;
+    stroke: black;
+    fill: beige;
 }
 
 .map {
-  height: 100%;
+    flex-grow: 1;
 }
 
 .wall {
-  fill: sandybrown;
+    fill: sandybrown;
 }
 
 .bomb {
-  fill: grey;
+    fill: grey;
 }
 
 .fire {
-  fill: orangered;
+    fill: orangered;
 }

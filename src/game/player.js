@@ -3,13 +3,15 @@ import {Bomb} from "./bomb.js";
 
 class Player {
 
+    name;
+
     x;
 
     y;
 
-    name;
-
     isAlive;
+
+    score;
 
     #updated;
 
@@ -17,22 +19,28 @@ class Player {
 
     #causeOfDeath
 
-    #playground;
-
     #bombs;
 
-    constructor(name) {
+    #playground;
+
+    constructor(name, playground) {
         if (typeof name !== "string") {
             throw Error(`Invalid name: '${name}'`);
         }
         this.name = name;
+        this.x = -1;
+        this.y = -1;
         this.isAlive = true;
+        this.score = 0;
         this.#updated = 0;
+        this.#action = undefined;
         this.#bombs = [];
+        this.#playground = playground;
+        this.#playground.players.push(this);
     }
 
     get updated() {
-      return this.#updated;
+        return this.#updated;
     }
 
     get action() {
@@ -43,44 +51,72 @@ class Player {
         return this.#causeOfDeath;
     }
 
-    get playground() {
-        return this.#playground;
-    }
-
-    set playground(playground) {
-        this.#playground = playground;
-    }
-
     get bombs() {
         return this.#bombs;
     }
 
     die(causeOfDeath) {
+        this.isAlive = false;
         this.#updated++;
         this.#action = FIRE;
         if (causeOfDeath) {
             this.#causeOfDeath = causeOfDeath;
         }
-        this.isAlive = false;
+    }
+
+    spawn(x, y) {
+        this.isAlive = true;
+        this.#updated++;
+        this.#action = SPACE;
+        this.#causeOfDeath = undefined;
+        this.#playground.spawn(this, x, y);
     }
 
     takes(action) {
-        this.#updated++;
-        this.#action = action;
         if (action === SPACE) {
+            this.#updated++;
+            this.#action = action;
             return this;
         }
         if (action === LEFT) {
-            return this.#playground.move(this, this.x - 1, this.y);
+            if (this.#playground.move(this, this.x - 1, this.y)) {
+                this.score = this.score + 1;
+                this.#updated++;
+                this.#action = action;
+                return this;
+            } else {
+                return;
+            }
         }
         if (action === RIGHT) {
-            return this.#playground.move(this, this.x + 1, this.y);
+            if (this.#playground.move(this, this.x + 1, this.y)) {
+                this.score = this.score + 1;
+                this.#updated++;
+                this.#action = action;
+                return this;
+            } else {
+                return;
+            }
         }
         if (action === UP) {
-            return this.#playground.move(this, this.x, this.y - 1);
+            if (this.#playground.move(this, this.x, this.y - 1)) {
+                this.score = this.score + 1;
+                this.#updated++;
+                this.#action = action;
+                return this;
+            } else {
+                return;
+            }
         }
         if (action === DOWN) {
-            return this.#playground.move(this, this.x, this.y + 1);
+            if (this.#playground.move(this, this.x, this.y + 1)) {
+                this.score = this.score + 1;
+                this.#updated++;
+                this.#action = action;
+                return this;
+            } else {
+                return;
+            }
         }
         if (action[0] === BOMB) {
             let time = 3;
@@ -90,11 +126,14 @@ class Player {
                 power = parseInt(action[2]);
             }
             const bomb = this.#playground.plant(new Bomb(time, power), this.x, this.y);
-            if (bomb !== undefined) {
+            if (bomb) {
+                this.score = this.score + 2;
                 this.bind(bomb);
+                this.#updated++;
+                this.#action = action[0];
                 return this;
             } else {
-              return;
+                return;
             }
         }
         throw Error(`Player '${this.name}' attempted to perform an illegal action '${action}'`);

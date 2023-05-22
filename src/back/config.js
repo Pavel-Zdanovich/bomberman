@@ -1,25 +1,3 @@
-function poll(abortController){
-    return fetch(
-        this.url,
-        {
-            method: "POST",
-            mode: "cors",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                x: this.player.x,
-                y: this.player.y,
-                map: this.playground.map.map(row => row.map(cell => cell.z[0].name)),
-                players: this.playground.players,
-                bombs: this.playground.bombs,
-                fires: this.playground.fires
-            }), // body data type must match "Content-Type" header
-            signal: abortController.signal
-        }
-    )
-        .then((response) => response.text())
-        .catch((error) => {});
-}
-
 const map = [
     ['#', '#', '#', '#', '#', '#', '#', '#', '#'],
     ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
@@ -37,25 +15,47 @@ const configs = [
         x: 3,
         y: 3,
         url: 'http://localhost:8080',
-        poll,
-        color: 'rgb(171,76,64)'
+        color: '#AB4C40',
+        request,
     },
     {
         name: 'B',
         x: 7,
         y: 1,
         url: 'http://localhost:8081',
-        poll,
-        color: 'rgb(107,134,68)'
+        color: '#6B8644',
+        request,
     },
     {
         name: 'C',
         x: 7,
         y: 7,
         url: 'http://localhost:8082',
-        poll,
-        color: 'rgb(82,89,171)'
+        color: '#5259AB',
+        request,
     }
 ];
+
+function request(abortController, url, player, playground) {
+    return fetch(
+        url,
+        {
+            method: "POST",
+            mode: "cors",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                x: player.x,
+                y: player.y,
+                map: playground.map.map(row => row.map(cell => cell.z[0].name)),
+                players: playground.players,
+                bombs: playground.bombs,
+                fires: playground.fires
+            }),
+            signal: abortController.signal
+        }
+    )
+        .then((response) => response.text())
+        .catch((error) => {});
+}
 
 export {map, configs};

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <path
+            id="id"
+            d="
+            m 0 25
+            l 25 75
+            h 50
+            l 25 -75
+            l -35 25
+            l -15 -50
+            l -15 50
+            z
+            "
+    />
+</svg>

@@ -1,0 +1,20 @@
+svg {
+    /*height: 50%;*/
+    stroke: black;
+    fill: gold;
+}
+
+.mat-expansion-panel-header-title {
+    flex: 0.25;
+}
+
+.mat-expansion-panel-header-description {
+    flex: 1;
+    justify-content: space-around;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

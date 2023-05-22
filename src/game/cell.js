@@ -213,27 +213,27 @@ class Cell {
     }
 
     hasWall() {
-      return this.z[0].name === WALL;
+        return this.z[0].name === WALL;
     }
 
     hasFire() {
-      return this.z[0].name === FIRE;
+        return this.z[0].name === FIRE;
     }
 
     hasBomb() {
-      return Bomb.isBomb(this.z[0]);
+        return Bomb.isBomb(this.z[0]);
     }
 
     getPlayers() {
-      let z = this.z;
-      if (Bomb.isBomb(this.z[0])) {
-        z = this.z.slice(1);
-      }
-      if (this.#playground.isPlayers(z)) {
-        return z;
-      } else {
-        return [];
-      }
+        let z = this.z;
+        if (Bomb.isBomb(this.z[0])) {
+            z = this.z.slice(1);
+        }
+        if (this.#playground.isPlayers(z)) {
+            return z;
+        } else {
+            return [];
+        }
     }
 }
 

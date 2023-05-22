@@ -1,0 +1,27 @@
+<mat-expansion-panel [style.background-color]="client.color">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <svg viewBox="0 0 100 100" *ngIf="client.isLeader">
+                <use xlink:href="assets/crown.svg#id"/>
+            </svg>
+        </mat-panel-title>
+        <mat-panel-description>
+            <span>{{client.player.name}}</span>
+            <span>{{client.player.score}}</span>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput #nameInput [value]="client.player.name" (input)="setName(nameInput.value)" placeholder="Name" [maxLength]="1" required/>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>URL</mat-label>
+            <input matInput #urlInput type="url" [value]="client.url" (input)="setUrl(urlInput.value)" placeholder="URL" required/>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Color</mat-label>
+            <input matInput #colorInput type="color" [value]="client.color" (input)="setColor(colorInput.value)" placeholder="Color" required/>
+        </mat-form-field>
+    </form>
+</mat-expansion-panel>

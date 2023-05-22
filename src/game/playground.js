@@ -148,9 +148,15 @@ class Playground {
                 const fire = player.causeOfDeath;
                 for (const bomb of fire.bombs) {
                     if (bomb.time === 1) {
-                        console.log(`'${player.name}' killed by '${bomb.players.map(p => p.name)}'`);
+                        // console.log(`'${player.name}' killed by '${bomb.players.map(p => p.name)}'`);
+                        bomb.players.filter(p => p !== player).forEach(p => {
+                            p.score = p.score + 10;
+                        });
                     } else {
-                        console.log(`'${player.name}' killed with the assistance of '${bomb.players.map(p => p.name)}'`);
+                        // console.log(`'${player.name}' killed with the assistance of '${bomb.players.map(p => p.name)}'`);
+                        bomb.players.filter(p => p !== player).forEach(p => {
+                            p.score = p.score + 5;
+                        });
                     }
                 }
             }

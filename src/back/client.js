@@ -1,34 +1,30 @@
 class Client {
 
-    playground;
-
     player;
 
     url;
 
-    #poll;
-
     color;
 
-    constructor(playground, player, url, poll, color) {
-        this.playground = playground;
+    #request;
+
+    constructor(player, url, color, request) {
         this.player = player;
         this.url = url;
-        this.#poll = poll;
         this.color = color;
+        this.#request = request;
     }
 
-    poll(abort) {
+    request(abortController, playground) {
         if (!this.player.isAlive) {
-            this.player.isAlive = true;
-            this.playground.spawn(this.player);
+            this.player.spawn();
             return Promise.resolve();
         }
-        const promise = this.#poll(abort);
+        const promise = this.#request(abortController, this.url, this.player, playground);
         promise.then((action) => {
-          if (action) {
-            this.player.takes(action)
-          }
+            if (action) {
+                this.player.takes(action)
+            }
         });
         return promise;
     }
