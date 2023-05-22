@@ -41,13 +41,16 @@ The goal is to earn the most points.
 | Name  | Character | Unicode       |
 |-------|-----------|---------------|
 | Stand |           | U+0020        |
-| Time  | 1-9       | U+0031-U+0039 |
-| Power | 1-9       | U+0031-U+0039 |
-| Bomb  | @         | U+0040        |
 | Left  | L         | U+004C        |
 | Right | R         | U+0052        |
 | Up    | U         | U+0055        |
 | Down  | D         | U+0044        |
+| Bomb  | @         | U+0040        |
+| Time  | 1-9       | U+0031-U+0039 |
+| Power | 1-9       | U+0031-U+0039 |
+
+Bomb by default has time = 3, power = 2.
+You can set time and power, but not just one.
 
 ### State machine
 
@@ -64,8 +67,19 @@ The goal is to earn the most points.
 Game is synchronous. Time is divided into intervals by ticks.
 Game objects act simultaneously, actions last interval, start and end in tick.
 Rendering happens in tick, but animation lasts interval.
-Server is counting the time and pulling clients player's action every interval.
+Server is counting the time and polling clients player's action every interval.
 Clients are waiting for a request from the server and respond with action.
+Therefore, in order to play, each client must:
+
+```
+Create a REST endpoint that takes a request body, calculates the next action, and returns a response body.
+```
+
+### REST endpoint
+
+```http request
+curl -d '@request_body.json' -H "Content-Type: application/json" -X POST http://localhost:8080
+```
 
 ### Request body
 
@@ -74,112 +88,23 @@ Clients are waiting for a request from the server and respond with action.
   "x": 1,
   "y": 1,
   "map": [
-    [
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#"
-    ],
-    [
-      "#",
-      "A",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      " ",
-      "#",
-      " ",
-      "#",
-      " ",
-      "#",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      "@",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      " ",
-      "#",
-      " ",
-      "#",
-      " ",
-      "#",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      " ",
-      "#",
-      " ",
-      "#",
-      " ",
-      "#",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      " ",
-      "#"
-    ],
-    [
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#"
-    ]
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#"],
+    ["#", "A", " ", " ", " ", " ", " ", " ", "#"],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", "@", " ", " ", " ", " ", " ", " ", "#"],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", " ", " ", " ", " ", " ", " ", " ", "#"],
+    ["#", " ", "#", " ", "#", " ", "#", " ", "#"],
+    ["#", " ", " ", " ", " ", " ", " ", " ", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#"]
   ],
   "players": [
     {
+      "name": "A",
       "x": 1,
       "y": 1,
-      "name": "A",
-      "isAlive": true
+      "isAlive": true,
+      "score": 0
     }
   ],
   "bombs": [
