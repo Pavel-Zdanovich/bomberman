@@ -77,13 +77,10 @@ Create a REST endpoint that takes a request body, calculates the next action, an
 
 ### REST endpoint
 
-```http request
-curl -d '@request_body.json' -H "Content-Type: application/json" -X POST http://localhost:8080
-```
-
-### Request body
-
-```json
+```curl
+curl --location 'http://localhost:8080' \
+--header 'Content-Type: application/json' \
+--data-raw '
 {
   "x": 1,
   "y": 1,
@@ -115,7 +112,7 @@ curl -d '@request_body.json' -H "Content-Type: application/json" -X POST http://
       "power": 2
     }
   ]
-}
+}'
 ```
 
 ### Response body
