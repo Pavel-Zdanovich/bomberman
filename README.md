@@ -2,6 +2,8 @@
 
 Coding competition
 
+![Screenshot](/src/assets/playground.png)
+
 ## Gameplay
 
 Game is made in the PvP arcade maze genre.
